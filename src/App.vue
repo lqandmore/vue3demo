@@ -1,20 +1,41 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+import Personal from './components/Personal.vue'
+import About from './components/About.vue'
+import { ref } from 'vue'
+
+let currentTab = ref('HelloWorld')
+// let currentTab = 'HelloWorld'
+const tabs = ['HelloWorld', 'About', 'Personal']
+function changeCurrentTab(tab: string) {
+  currentTab.value = tab
+  console.log(currentTab.value)
+}
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <button
+      v-for="item in tabs"
+      :key="item"
+      @click="changeCurrentTab(item)"
+      :class="{active: currentTab === item}"
+    >{{ item }}</button>
   </div>
+  <component :is="currentTab" class="tab"></component>
   <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
+button {
+  height: 40px;
+  width: 100px;
+}
+.tab {
+  display: block;
+  width: 100vw;
+  height: 50vh;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
