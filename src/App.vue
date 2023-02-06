@@ -2,26 +2,29 @@
 import HelloWorld from './components/HelloWorld.vue'
 import About from './components/About.vue'
 import Person from './components/Person.vue'
-import { ref,reactive,computed } from 'vue'
+import { ref,reactive,computed,defineAsyncComponent } from 'vue'
 const tabs = [{name:"HelloWorld", component: HelloWorld},{name:"About",component: About},{name:"Person",component: Person}]
 const currentTab = ref(0)
-
+const asyncTab = defineAsyncComponent(()=>import('./components/AsyncTab.vue'))
+let isshow = ref(true)
 function btnclick(item: number) {
   currentTab.value = item
 }
 
-let activeI = computed(()=>{
-  return currentTab.value
-})
+
 </script>
 
 <template>
   <div>
     <button v-for="(item,index) in tabs" :key="item.name" @click="btnclick(index)"   :class="{active:currentTab===index}"  >{{ item.name }}</button>
-
+    <button @click="isshow = !isshow">显示/隐藏</button>
   </div>
   <div>
-    <component :is="tabs[activeI].component"></component>
+    <component :is="tabs[currentTab].component"></component>
+    <template v-if="isshow">
+      
+      <async-tab></async-tab>
+    </template>
   </div>
   <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
