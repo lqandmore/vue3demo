@@ -1,20 +1,36 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+import About from './components/About.vue'
+import Person from './components/Person.vue'
+import { ref,reactive,computed } from 'vue'
+const tabs = ["HelloWorld", "About","Person"]
+const currentTab = ref(0)
+
+function btnclick(item: number) {
+  currentTab.value = item
+}
+
+let activeI = computed(()=>{
+  return currentTab.value
+})
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <button v-for="(item,index) in tabs" :key="item" @click="btnclick(index)"   :class="{active:currentTab===index}"  >{{ item }}</button>
+
+  </div>
+  <div>
+    <component :is="tabs[activeI]"></component>
   </div>
   <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
+
+.active {
+  color: aquamarine;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
