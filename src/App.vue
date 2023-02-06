@@ -17,10 +17,15 @@ function btnclick(item: number) {
 <template>
   <div>
     <button v-for="(item,index) in tabs" :key="item.name" @click="btnclick(index)"   :class="{active:currentTab===index}"  >{{ item.name }}</button>
+    
+    
     <button @click="isshow = !isshow">显示/隐藏</button>
   </div>
   <div>
-    <component :is="tabs[currentTab].component"></component>
+    <keep-alive include="HelloWorld,About">
+      <component :is="tabs[currentTab].component"></component>
+    </keep-alive>
+    
     <template v-if="isshow">
       
       <async-tab></async-tab>
