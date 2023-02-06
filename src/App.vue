@@ -3,7 +3,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import About from './components/About.vue'
 import Person from './components/Person.vue'
 import { ref,reactive,computed } from 'vue'
-const tabs = ["HelloWorld", "About","Person"]
+const tabs = [{name:"HelloWorld", component: HelloWorld},{name:"About",component: About},{name:"Person",component: Person}]
 const currentTab = ref(0)
 
 function btnclick(item: number) {
@@ -17,13 +17,13 @@ let activeI = computed(()=>{
 
 <template>
   <div>
-    <button v-for="(item,index) in tabs" :key="item" @click="btnclick(index)"   :class="{active:currentTab===index}"  >{{ item }}</button>
+    <button v-for="(item,index) in tabs" :key="item.name" @click="btnclick(index)"   :class="{active:currentTab===index}"  >{{ item.name }}</button>
 
   </div>
   <div>
-    <component :is="tabs[activeI]"></component>
+    <component :is="tabs[activeI].component"></component>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
 
 <style scoped>
