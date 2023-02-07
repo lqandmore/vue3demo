@@ -1,19 +1,16 @@
 <template>
-    <div>
-
-    </div>
+  <div></div>
 </template>
 
 <script setup lang="ts">
 function sayHello() {
-    console.log("hahaha");
+  console.log('hahaha')
 }
 
 defineExpose({
-    sayHello
+  sayHello
 })
 </script>
 
 <style scoped>
-
 </style>
