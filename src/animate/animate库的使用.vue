@@ -3,12 +3,8 @@
     <button @click="show = !show">显示/隐藏</button>
     <transition
       name="why"
-      @before-enter="beforeEnter"
-      @enter="enter"
-      @after-enter="afterEnter"
-      @before-leave="beforLeave"
-      @leave="leave"
-      @after-leave="afterLeave"
+      enter-active-class="animate__animated animate__bounce"
+      leave-active-class="animate__animated animate__backInLeft"
     >
       <img src="./feichuan.jpg" v-if="show" class="feichuan" />
       <!-- <img src="./123dw.jpg" v-else class="feichuan" /> -->
@@ -21,24 +17,6 @@ import { ref } from 'vue'
 import 'animate.css'
 
 const show = ref(true)
-function beforeEnter() {
-  console.log('beforeEnter')
-}
-function enter() {
-  console.log('enter')
-}
-function afterEnter() {
-  console.log('afterEnter')
-}
-function beforLeave() {
-  console.log('beforLeave')
-}
-function leave() {
-  console.log('leave')
-}
-function afterLeave() {
-  console.log('afterLeave')
-}
 </script>
 
 <style scoped>
@@ -50,6 +28,7 @@ button {
   display: block;
   width: 100vw;
   height: 300px;
+  
 }
 .feichuan {
   display: block;
