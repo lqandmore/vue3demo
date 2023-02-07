@@ -1,40 +1,43 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-import Personal from './components/Personal.vue'
 import About from './components/About.vue'
-import { ref } from 'vue'
-
-let currentTab = ref('HelloWorld')
-// let currentTab = 'HelloWorld'
-const tabs = ['HelloWorld', 'About', 'Personal']
-function changeCurrentTab(tab: string) {
-  currentTab.value = tab
-  console.log(currentTab.value)
+import Person from './components/Person.vue'
+import { ref,reactive,computed,defineAsyncComponent } from 'vue'
+const tabs = [{name:"HelloWorld", component: HelloWorld},{name:"About",component: About},{name:"Person",component: Person}]
+const currentTab = ref(0)
+const asyncTab = defineAsyncComponent(()=>import('./components/AsyncTab.vue'))
+let isshow = ref(true)
+function btnclick(item: number) {
+  currentTab.value = item
 }
+
+
 </script>
 
 <template>
   <div>
-    <button
-      v-for="item in tabs"
-      :key="item"
-      @click="changeCurrentTab(item)"
-      :class="{active: currentTab === item}"
-    >{{ item }}</button>
+    <button v-for="(item,index) in tabs" :key="item.name" @click="btnclick(index)"   :class="{active:currentTab===index}"  >{{ item.name }}</button>
+    
+    
+    <button @click="isshow = !isshow">显示/隐藏</button>
   </div>
-  <component :is="currentTab" class="tab"></component>
-  <HelloWorld msg="Vite + Vue" />
+  <div>
+    <keep-alive include="HelloWorld,About">
+      <component :is="tabs[currentTab].component"></component>
+    </keep-alive>
+    
+    <template v-if="isshow">
+      
+      <async-tab></async-tab>
+    </template>
+  </div>
+  <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
 
 <style scoped>
-button {
-  height: 40px;
-  width: 100px;
-}
-.tab {
-  display: block;
-  width: 100vw;
-  height: 50vh;
+
+.active {
+  color: aquamarine;
 }
 .logo {
   height: 6em;
