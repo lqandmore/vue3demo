@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="lq-root">
     <input type="text" v-model="message" />
     <h2>{{ message }}</h2>
     <h2>{{ name }} --{{ age }}</h2>
